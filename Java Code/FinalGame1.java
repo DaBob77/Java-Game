@@ -11,22 +11,26 @@ public class FinalGame1 {
         JFrame frame = new JFrame("Portal 2d");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1080, 720);
+        //Create a null image in case file reading fails
+        BufferedImage playerImage = null;
+
         try {
-            BufferedImage playerImage = ImageIO.read(new File(""));
+            playerImage = ImageIO.read(new File("IMAGES/MC.png"));
         } catch(IOException e) {
             System.out.println("Image failed to load");
             e.printStackTrace();
         }
 
+        //Convert image to final to use in other classes
+        final BufferedImage finalPlayerImage = playerImage;
 
         JPanel gamePanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.setColor(Color.BLACK);
-                g.fillRect(360, 540, 50, 50);
-            }
-        };
+                g.drawImage(finalPlayerImage, 360, 540, null);
+                }
+            };
 
         frame.add(gamePanel);
 
