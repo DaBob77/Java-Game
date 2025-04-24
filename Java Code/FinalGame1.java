@@ -24,17 +24,21 @@ public class FinalGame1 {
         //Convert image to final to use in other classes
         final BufferedImage finalPlayerImage = playerImage;
 
+        Player player = new Player(finalPlayerImage, 0, 0);
+
         JPanel gamePanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(finalPlayerImage, 360, 540, null);
+                player.draw(g);
                 }
             };
 
         frame.add(gamePanel);
 
         frame.setVisible(true);
+
+        System.out.println(player);
     }
 }
 
