@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.Timer;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -31,6 +32,7 @@ public class FinalGame1 {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+                
                 player.draw(g);
                 }
             };
@@ -47,12 +49,11 @@ public class FinalGame1 {
                 
                 // Repaint the panel
                 gamePanel.repaint();
+                System.out.println(player);
             }
         });
 
-
-
-        System.out.println(player);
+        gameTimer.start();
     }
 }
 

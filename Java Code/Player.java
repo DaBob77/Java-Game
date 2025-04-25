@@ -4,8 +4,8 @@ import java.awt.image.*;
 public class Player {
     private int xPos;
     private int yPos;
-    private int xVelocity;
-    private int yVelocity;
+    private double xVelocity;
+    private double yVelocity;
     private boolean isJumping = false; // Jumping state
     private boolean isGrounded = false; // Grounded state
     private BufferedImage image; 
@@ -27,15 +27,14 @@ public class Player {
 
     public void update() {
         //yVelocity handler
-        if (yVelocity > TERMINAL_VELOCITY) {
-            yVelocity -= yVelocity * GRAVITY;
+        if (yVelocity < TERMINAL_VELOCITY) {
+            yVelocity += GRAVITY;
         }
 
 
 
         //Position manager 
         yPos += yVelocity;
-
     }
 
     // Render player
@@ -74,11 +73,11 @@ public class Player {
         return yPos;
     }
 
-    public int getxVelocity() {
+    public double getxVelocity() {
         return xVelocity;
     }
 
-    public int getyVelocity() {
+    public double getyVelocity() {
         return yVelocity;
     }
 
