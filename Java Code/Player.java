@@ -4,17 +4,38 @@ import java.awt.image.*;
 public class Player {
     private int xPos;
     private int yPos;
-    private int xSpeed;
-    private int ySpeed;
+    private int xVelocity;
+    private int yVelocity;
+    private boolean isJumping = false; // Jumping state
+    private boolean isGrounded = false; // Grounded state
     private BufferedImage image; 
-    
+
+    private final int GRAVITY = 1; // Gravity constant
+    private final int TERMINAL_VELOCITY = 60; // Max fall speed
+    private final int JUMP_FORCE = 15; // Jump Constant
+
+
+
     // Constructor with image, xPos and yPos
     public Player(BufferedImage image, int xPos, int yPos) {
         this.image = image;
         this.xPos = xPos;
         this.yPos = yPos;
-        this.xSpeed = 0;
-        this.ySpeed = 0;
+        this.xVelocity = 0;
+        this.yVelocity = 0;
+    }
+
+    public void update() {
+        //yVelocity handler
+        if (yVelocity > TERMINAL_VELOCITY) {
+            yVelocity -= yVelocity * GRAVITY;
+        }
+
+
+
+        //Position manager 
+        yPos += yVelocity;
+
     }
 
     // Render player
@@ -31,12 +52,12 @@ public class Player {
         this.yPos = yPos;
     }
 
-    public void setXSpeed(int xSpeed) {
-        this.xSpeed = xSpeed;
+    public void setXVelocity(int xVelocity) {
+        this.xVelocity = xVelocity;
     }
 
-    public void setYSpeed(int ySpeed) {
-        this.ySpeed = ySpeed;
+    public void setYVelocity(int yVelocity) {
+        this.yVelocity = yVelocity;
     }
 
     public void setImage(BufferedImage image) {
@@ -53,12 +74,12 @@ public class Player {
         return yPos;
     }
 
-    public int getXSpeed() {
-        return xSpeed;
+    public int getxVelocity() {
+        return xVelocity;
     }
 
-    public int getYSpeed() {
-        return ySpeed;
+    public int getyVelocity() {
+        return yVelocity;
     }
 
     public BufferedImage getImage() {
@@ -67,6 +88,6 @@ public class Player {
 
     //@Override toString
     public String toString() {
-        return "Player{ xPos=" + xPos + ", yPos=" + yPos + ", xSpeed=" + xSpeed + ", ySpeed=" + ySpeed +'}';
+        return "Player{xPos=" + xPos + ", yPos=" + yPos + ", xVelocity=" + xVelocity + ", yVelocity=" + yVelocity +'}';
     }
 }

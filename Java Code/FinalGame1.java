@@ -7,6 +7,7 @@ import javax.imageio.*;
 import java.io.*;
 
 public class FinalGame1 {
+    private static final int DELAY = 16;
     public static void main(String[] args) {
         JFrame frame = new JFrame("Portal 2d");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,8 +36,21 @@ public class FinalGame1 {
             };
 
         frame.add(gamePanel);
-
         frame.setVisible(true);
+        
+
+        //Use timer for gameloop
+        Timer gameTimer = new Timer(DELAY, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                player.update();
+                
+                // Repaint the panel
+                gamePanel.repaint();
+            }
+        });
+
+
 
         System.out.println(player);
     }
