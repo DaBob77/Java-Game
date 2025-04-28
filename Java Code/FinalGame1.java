@@ -8,7 +8,7 @@ import javax.imageio.*;
 import java.io.*;
 
 public class FinalGame1 {
-    private static final int DELAY = 16;
+    private static final int DELAY = 16; //16 for 60 fps
     public static void main(String[] args) {
         JFrame frame = new JFrame("Portal 2d");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,7 +26,8 @@ public class FinalGame1 {
         //Convert image to final to use in other classes
         final BufferedImage finalPlayerImage = playerImage;
 
-        Player player = new Player(finalPlayerImage, 0, 0);
+        Character player = new Character(finalPlayerImage, 0, 0);
+        ArrayList<Rectangle> l1 = new ArrayList<Rectangle>(Arrays.asList(new Rectangle(0, 800, 50, 800)));
 
         JPanel gamePanel = new JPanel() {
             @Override
@@ -45,7 +46,7 @@ public class FinalGame1 {
         Timer gameTimer = new Timer(DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                player.update();
+                PlayerHandler.updatePlayer(player, l1);
                 
                 // Repaint the panel
                 gamePanel.repaint();

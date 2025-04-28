@@ -1,23 +1,24 @@
+//Class for everything living and basically humanoid (players, enemies, etc.)
 import java.awt.*;
 import java.awt.image.*;
 
-public class Player {
+public class Character {
     private int xPos;
     private int yPos;
     private double xVelocity;
     private double yVelocity;
     private boolean isJumping = false; // Jumping state
     private boolean isGrounded = false; // Grounded state
-    private BufferedImage image; 
+    private BufferedImage image;
+    private int imageHeight;
+    private int imageWidth;
 
-    private final int GRAVITY = 1; // Gravity constant
-    private final int TERMINAL_VELOCITY = 60; // Max fall speed
     private final int JUMP_FORCE = 15; // Jump Constant
 
 
 
     // Constructor with image, xPos and yPos
-    public Player(BufferedImage image, int xPos, int yPos) {
+    public Character(BufferedImage image, int xPos, int yPos) {
         this.image = image;
         this.xPos = xPos;
         this.yPos = yPos;
@@ -25,19 +26,7 @@ public class Player {
         this.yVelocity = 0;
     }
 
-    public void update() {
-        //yVelocity handler
-        if (yVelocity < TERMINAL_VELOCITY) {
-            yVelocity += GRAVITY;
-        }
-
-
-
-        //Position manager 
-        yPos += yVelocity;
-    }
-
-    // Render player
+    // Render character
     public void draw(Graphics g) {
         g.drawImage(image, xPos, yPos, null);
     }
@@ -85,8 +74,16 @@ public class Player {
         return image;
     }
 
+    public int getImageHeight() {
+        return imageHeight;
+    }
+
+    public int getImageWidth() {
+        return imageWidth;
+    }
+
     //@Override toString
     public String toString() {
-        return "Player{xPos=" + xPos + ", yPos=" + yPos + ", xVelocity=" + xVelocity + ", yVelocity=" + yVelocity +'}';
+        return "Character{xPos=" + xPos + ", yPos=" + yPos + ", xVelocity=" + xVelocity + ", yVelocity=" + yVelocity +'}';
     }
 }
