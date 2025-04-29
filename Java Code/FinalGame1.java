@@ -27,7 +27,9 @@ public class FinalGame1 {
         final BufferedImage finalPlayerImage = playerImage;
 
         Character player = new Character(finalPlayerImage, 0, 0);
-        ArrayList<Rectangle> l1 = new ArrayList<Rectangle>(Arrays.asList(new Rectangle(0, 800, 50, 800)));
+        ArrayList<Rectangle> platforml1 = new ArrayList<Rectangle>(Arrays.asList(new Rectangle(0, 800, 50, 800)));
+        Level l1 = new Level(1, platforml1);
+        PlayerHandler playerHandler = new PlayerHandler(player); //Create a new playerHandler to use for the player
 
         JPanel gamePanel = new JPanel() {
             @Override
@@ -46,7 +48,7 @@ public class FinalGame1 {
         Timer gameTimer = new Timer(DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PlayerHandler.updatePlayer(player, l1);
+                playerHandler.updatePlayer(l1);
                 
                 // Repaint the panel
                 gamePanel.repaint();

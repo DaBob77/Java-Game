@@ -5,10 +5,6 @@ import java.awt.image.*;
 public class Character {
     private int xPos;
     private int yPos;
-    private double xVelocity;
-    private double yVelocity;
-    private boolean isJumping = false; // Jumping state
-    private boolean isGrounded = false; // Grounded state
     private BufferedImage image;
     private int imageHeight;
     private int imageWidth;
@@ -22,8 +18,6 @@ public class Character {
         this.image = image;
         this.xPos = xPos;
         this.yPos = yPos;
-        this.xVelocity = 0;
-        this.yVelocity = 0;
     }
 
     // Render character
@@ -40,14 +34,6 @@ public class Character {
         this.yPos = yPos;
     }
 
-    public void setXVelocity(int xVelocity) {
-        this.xVelocity = xVelocity;
-    }
-
-    public void setYVelocity(int yVelocity) {
-        this.yVelocity = yVelocity;
-    }
-
     public void setImage(BufferedImage image) {
         this.image = image;
     }
@@ -60,14 +46,6 @@ public class Character {
 
     public int getYPos() {
         return yPos;
-    }
-
-    public double getxVelocity() {
-        return xVelocity;
-    }
-
-    public double getyVelocity() {
-        return yVelocity;
     }
 
     public BufferedImage getImage() {
@@ -84,6 +62,6 @@ public class Character {
 
     //@Override toString
     public String toString() {
-        return "Character{xPos=" + xPos + ", yPos=" + yPos + ", xVelocity=" + xVelocity + ", yVelocity=" + yVelocity +'}';
+        return "Character{xPos=" + xPos + ", yPos=" + yPos + "}";
     }
 }
