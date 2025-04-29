@@ -1,7 +1,7 @@
 //Class used to update players, enemies, boxes, basically everything that moves
 public class PlayerHandler {
     final int TERMINAL_VELOCITY = 100;
-    final int yAccel = 2;
+    final int yAccel = 3;
     int xPos = 100;
     int yPos = 100;
     boolean grounded = false;
@@ -14,14 +14,16 @@ public class PlayerHandler {
     }
 
     public void updatePlayer(Level level1) {
+
+        gravity();
+        player.setYPos(yPos);
+    }
+
+    private void gravity(){
         if(yVelocity <= TERMINAL_VELOCITY && grounded == false) {
             yVelocity += yAccel;
         }
 
         yPos += yVelocity;
-         
-
-
-        player.setYPos(yPos);
     }
 }
