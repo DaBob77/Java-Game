@@ -1,7 +1,7 @@
 //Class used to update players, enemies, boxes, basically everything that moves
 public class PlayerHandler {
     final int TERMINAL_VELOCITY = 100;
-    final int yAccel = 3;
+    final double yAccel = 2.5;
     int xPos = 100;
     int yPos = 100;
     boolean grounded = false;

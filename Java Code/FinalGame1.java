@@ -35,7 +35,6 @@ public class FinalGame1 {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                
                 player.draw(g);
                 }
             };
