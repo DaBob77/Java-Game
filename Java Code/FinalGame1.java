@@ -31,7 +31,7 @@ public class FinalGame1 {
         final BufferedImage finalTestRect = testRect;
 
         Character player = new Character(finalPlayerImage, 0, 0);
-        ArrayList<Rectangle> platforml1 = new ArrayList<Rectangle>(Arrays.asList(new Rectangle(finalTestRect, 0, 900, 100, 2000)));
+        ArrayList<Rectangle> platforml1 = new ArrayList<Rectangle>(Arrays.asList(new Rectangle(finalTestRect, 0, 950, 100, 2000)));
         Level l1 = new Level(1, platforml1);
         PlayerHandler playerHandler = new PlayerHandler(player); //Create a new playerHandler to use for the player
 

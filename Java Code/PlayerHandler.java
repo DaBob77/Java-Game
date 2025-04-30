@@ -14,7 +14,8 @@ public class PlayerHandler {
     }
 
     public void updatePlayer(Level level1) {
-
+        for (int i = 0; i < level1.)
+        grounded = Collisions.isPlayerColliding(player, level1);
         gravity();
         player.setYPos(yPos);
     }
