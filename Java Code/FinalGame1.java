@@ -15,19 +15,23 @@ public class FinalGame1 {
         frame.setSize(1080, 720);
         //Create a null image in case file reading fails
         BufferedImage playerImage = null;
+        BufferedImage testRect = null;
 
-        try {
+        try { //Attempt to set all images
             playerImage = ImageIO.read(new File("IMAGES/MC.png"));
+            testRect = ImageIO.read(new File("IMAGES/testrect.png"));
+
         } catch(IOException e) {
-            System.out.println("Image failed to load");
+            System.out.println("At least one image failed to load");
             e.printStackTrace();
         }
 
         //Convert image to final to use in other classes
         final BufferedImage finalPlayerImage = playerImage;
+        final BufferedImage finalTestRect = testRect;
 
         Character player = new Character(finalPlayerImage, 0, 0);
-        ArrayList<Rectangle> platforml1 = new ArrayList<Rectangle>(Arrays.asList(new Rectangle(0, 800, 50, 800)));
+        ArrayList<Rectangle> platforml1 = new ArrayList<Rectangle>(Arrays.asList(new Rectangle(finalTestRect, 0, 900, 100, 2000)));
         Level l1 = new Level(1, platforml1);
         PlayerHandler playerHandler = new PlayerHandler(player); //Create a new playerHandler to use for the player
 
@@ -36,8 +40,21 @@ public class FinalGame1 {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 player.draw(g);
+                l1.draw(g);
                 }
             };
+        
+        // Add mouse listener to get click coordinates
+        gamePanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+                System.out.println("Mouse clicked at: (" + x + ", " + y + ")");
+            }
+        });
+
+
 
         frame.add(gamePanel);
         frame.setVisible(true);
@@ -51,7 +68,6 @@ public class FinalGame1 {
                 
                 // Repaint the panel
                 gamePanel.repaint();
-                System.out.println(player);
             }
         });
 

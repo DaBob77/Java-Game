@@ -8,7 +8,7 @@ public class Collisions {
     //Check if a player is colliding with a platform
     public static boolean isPlayerColliding(Character player, Rectangle platform) {
         //Convert player to a rectangle for simple collisions
-        Rectangle playerRect = new Rectangle(player.getXPos(), player.getYPos(), player.getImageHeight(), player.getImageWidth() );
+        Rectangle playerRect = new Rectangle(null, player.getXPos(), player.getYPos(), player.getImageHeight(), player.getImageWidth() );
         return isColliding(playerRect, platform);
     }
 }

@@ -1,17 +1,21 @@
 import java.awt.*;
+import java.awt.image.*;
 
 public class Rectangle {
+    private BufferedImage image;
     private int xPos; //xPos and yPos for the bottom right point of the rectangle
     private int yPos;
     private int width;
     private int length;
 
-    public Rectangle(int xPos, int yPos, int width, int length) {
+    public Rectangle(BufferedImage image, int xPos, int yPos, int width, int length) { //Temperary image before we add an actual map
+        this.image = image;
         this.xPos = xPos;
         this.yPos = yPos;
         this.width = width;
         this.length = length;
     }
+    
     
     public boolean intersects(Rectangle rect1, Rectangle rect2) {
         // Check if rectangles do NOT overlap horizontally or vertically
@@ -49,6 +53,9 @@ public class Rectangle {
 
     public int getLength() {
         return length;
+    }
+    public BufferedImage getImage() {
+        return image;
     }
 
     public void setLength(int length) {
