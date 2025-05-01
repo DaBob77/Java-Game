@@ -16,3 +16,4 @@ public final class Constants {
     //Player dimensions
     public static final int PLAYER_WIDTH = 56;
     public static final int PLAYER_HEIGHT = 104;
+}
