@@ -1,6 +1,5 @@
 import java.util.*;
 import java.awt.*;
-import java.awt.image.*;
 
 public class Level {
     private int levelNum;
@@ -29,8 +28,8 @@ public class Level {
     }
 
     public void draw(Graphics g) { //This will be removed as all backgrounds are added
-        for (int i = 0; i < platforms.size(); i++) { //Loop through all platforms and draw the image for each
-            g.drawImage(platforms.get(i).getImage(), platforms.get(i).getXPos(), platforms.get(i).getYPos(), null);
+        for (Rectangle platform : platforms) { //Loop through all platforms and draw the image for each
+            g.drawImage(platform.getImage(), platform.getXPos(), platform.getYPos(), platform.getWidth(), platform.getHeight(), null);
         }
     }
 }

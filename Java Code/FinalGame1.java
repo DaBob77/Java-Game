@@ -8,7 +8,6 @@ import javax.imageio.*;
 import java.io.*;
 
 public class FinalGame1 {
-    private static final int DELAY = 16; //16 for 60 fps
     public static void main(String[] args) {
         JFrame frame = new JFrame("Portal 2d");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,10 +29,14 @@ public class FinalGame1 {
         final BufferedImage finalPlayerImage = playerImage;
         final BufferedImage finalTestRect = testRect;
 
-        Character player = new Character(finalPlayerImage, 0, 0);
-        ArrayList<Rectangle> platforml1 = new ArrayList<Rectangle>(Arrays.asList(new Rectangle(finalTestRect, 0, 950, 100, 2000)));
-        Level l1 = new Level(1, platforml1);
-        PlayerHandler playerHandler = new PlayerHandler(player); //Create a new playerHandler to use for the player
+    Character player = new Character(finalPlayerImage, 100, 100); // Start player at (100, 100)
+    // Platform: x=0, y=500, width=1080, height=50
+    ArrayList<Rectangle> platforml1 = new ArrayList<>(Arrays.asList(
+        new Rectangle(finalTestRect, 0, 500, 1080, 50) // Will add more later
+    ));
+    Level l1 = new Level(1, platforml1);
+    PlayerHandler playerHandler = new PlayerHandler(player); //Create a new playerHandler to use for the player
+
 
         JPanel gamePanel = new JPanel() {
             @Override
@@ -55,13 +58,12 @@ public class FinalGame1 {
         });
 
 
-
         frame.add(gamePanel);
         frame.setVisible(true);
         
 
         //Use timer for gameloop
-        Timer gameTimer = new Timer(DELAY, new ActionListener() {
+        Timer gameTimer = new Timer(Constants.DELAY, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 playerHandler.updatePlayer(l1);

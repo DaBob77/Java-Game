@@ -6,8 +6,8 @@ public class Character {
     private int xPos;
     private int yPos;
     private BufferedImage image;
-    private int imageHeight;
-    private int imageWidth;
+    private int imageHeight = 104;
+    private int imageWidth = 56;
 
     private final int JUMP_FORCE = 15; // Jump Constant
 

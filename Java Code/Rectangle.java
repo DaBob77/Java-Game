@@ -6,69 +6,41 @@ public class Rectangle {
     private int xPos; //xPos and yPos for the bottom right point of the rectangle
     private int yPos;
     private int width;
-    private int length;
+    private int height;
 
-    public Rectangle(BufferedImage image, int xPos, int yPos, int width, int length) { //Temperary image before we add an actual map
+    public Rectangle(BufferedImage image, int xPos, int yPos, int width, int height) { //Temperary image before we add an actual map
         this.image = image;
         this.xPos = xPos;
         this.yPos = yPos;
         this.width = width;
-        this.length = length;
+        this.height = height;
     }
     
     
-    public boolean intersects(Rectangle rect1, Rectangle rect2) {
-        // Check if rectangles do NOT overlap horizontally or vertically
-        if (rect1.xPos <= rect2.xPos - rect2.width || rect2.xPos <= rect1.xPos - rect1.width)
+    public boolean intersects(Rectangle other) {
+        if (other == null) return false;
+        // Check for non-overlap
+        if (this.xPos + this.width <= other.xPos ||    // this is left of other
+            this.xPos >= other.xPos + other.width ||   // this is right of other
+            this.yPos + this.height <= other.yPos ||   // this is above other
+            this.yPos >= other.yPos + other.height) {  // this is below other
             return false;
-        if (rect1.yPos <= rect2.yPos - rect2.length || rect2.yPos <= rect1.yPos - rect1.length)
-            return false;
+        }
+        // Otherwise, they overlap
         return true;
     }
 
-    //Getters and Setters
-    public int getXPos() {
-        return xPos;
-    }
 
-    public void setXPos(int xPos) {
-        this.xPos = xPos;
-    }
-
-    public int getYPos() {
-        return yPos;
-    }
-
-    public void setYPos(int yPos) {
-        this.yPos = yPos;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getLength() {
-        return length;
-    }
-    public BufferedImage getImage() {
-        return image;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public void setPos(int xPos, int yPos) {
-        this.xPos = xPos;
-        this.yPos = yPos;
-    }
-
-    public void setSize(int width, int length) {
-        this.width = width;
-        this.length = length;
-    }
+    //Shorthand getters and setters so that this file isn't 500 lines long
+    public int getXPos() { return xPos; }
+    public void setXPos(int xPos) { this.xPos = xPos; }
+    public int getYPos() { return yPos; }
+    public void setYPos(int yPos) { this.yPos = yPos; }
+    public int getWidth() { return width; }
+    public void setWidth(int width) { this.width = width; }
+    public int getHeight() { return height; }
+    public BufferedImage getImage() { return image; }
+    public void setHeight(int height) { this.height = height; }
+    public void setPos(int xPos, int yPos) { this.xPos = xPos; this.yPos = yPos; }
+    public void setSize(int width, int height) { this.width = width; this.height = height; }
 }
