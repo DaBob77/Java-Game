@@ -11,7 +11,7 @@ public class FinalGame1 {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Portal 2d");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1080, 720);
+        frame.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         //Create a null image in case file reading fails
         BufferedImage playerImage = null;
         BufferedImage testRect = null;
@@ -36,7 +36,7 @@ public class FinalGame1 {
     ));
     Level l1 = new Level(1, platforml1);
     PlayerHandler playerHandler = new PlayerHandler(player); //Create a new playerHandler to use for the player
-
+    Inputs inputHandler = new Inputs();
 
         JPanel gamePanel = new JPanel() {
             @Override
@@ -46,19 +46,13 @@ public class FinalGame1 {
                 l1.draw(g);
                 }
             };
-        
-        // Add mouse listener to get click coordinates
-        gamePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int x = e.getX();
-                int y = e.getY();
-                System.out.println("Mouse clicked at: (" + x + ", " + y + ")");
-            }
-        });
-
+        frame.addKeyListener(inputHandler);
+        frame.addMouseListener(inputHandler);
+        frame.addMouseMotionListener(inputHandler);
 
         frame.add(gamePanel);
+        frame.setFocusable(true);
+        frame.requestFocusInWindow();
         frame.setVisible(true);
         
 
