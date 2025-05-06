@@ -1,26 +1,80 @@
 public class PlayerHandler {
     boolean grounded = false;
     double yVelocity = 0;
-    // double xVelocity = 0; // Not used yet
+    double xVelocity = 0;
+    int xDir = 0; //-1 for left, 0 for none, 1 for right
     Character player;
+    Inputs input; //For movement
 
-    public PlayerHandler(Character player) {
+    public PlayerHandler(Character player, Inputs input) {
         this.player = player;
+        this.input = input;
     }
 
     public void updatePlayer(Level level1) {
-        // 1. Apply physics (gravity based on current grounded state)
+        // 1. Apply physics
         applyGravity();
+        xMovement();
 
         // 2. Update player position based on velocity
         int oldY = player.getYPos();
-        player.setYPos(oldY + (int)yVelocity);
+        int oldX = player.getXPos();
 
-        // 3. Check for collisions with the *new* position and resolve them
+        player.setXPos((int)(oldX + xVelocity));
+        player.setYPos((int)(oldY + yVelocity));
+        System.out.println(xVelocity);
+
+        // 3. Check for collisions with the new position and resolve them
         checkAndResolveCollisions(level1, oldY);
 
-        // Debugging output
         // System.out.println("Grounded: " + grounded + ", yVel: " + yVelocity + ", yPos: " + player.getYPos());
+    }
+
+    private void xMovement() {
+        if (input.isDPressed() || input.isAPressed()) { //Check the player is trying to move
+            if (input.isDPressed()) {
+                xDir = 1;
+            } else {
+                xDir = -1;
+            }
+
+            //Apply accleration force before checking for max speed
+            xVelocity += xDir * Constants.X_ACCEL_GROUNDED;
+
+            if (xDir == 1) { // Moving right
+                if (xVelocity > Constants.MAX_X_VELO_GROUNDED) {
+                    xVelocity = Constants.MAX_X_VELO_GROUNDED; 
+                }
+            } else { // Moving left (xDir == -1)
+                if (xVelocity < -Constants.MAX_X_VELO_GROUNDED) {
+                    xVelocity = -Constants.MAX_X_VELO_GROUNDED;
+                }
+            }
+        }
+         // 2. No input, handle deceleration (friction)
+         if (Math.abs(xVelocity) < 0.5) { // If speed is very low, stop completely
+            xVelocity = 0;
+            xDir = 0; // Not moving, so no specific direction
+        } else {
+            // Player is coasting, set facing direction based on current movement
+            xDir = (xVelocity > 0) ? 1 : -1;
+            
+            // Determine direction for deceleration force (opposite to current velocity)
+            int deaccelForceDirection = (xVelocity > 0) ? -1 : 1;
+            
+            xVelocity += deaccelForceDirection * Constants.X_DEACCEL_GROUNDED;
+
+            // Ensure deceleration doesn't reverse direction (i.e., overshoot zero)
+            if ((deaccelForceDirection == -1 && xVelocity < 0) || // Was moving right, decelerated past 0
+                (deaccelForceDirection == 1 && xVelocity > 0)) {  // Was moving left, decelerated past 0
+                xVelocity = 0;
+            }
+            
+            // If velocity becomes zero after deceleration, update facing direction to neutral
+            if (xVelocity == 0) {
+                xDir = 0;
+            }
+        }
     }
 
     private void applyGravity() {
@@ -29,8 +83,9 @@ public class PlayerHandler {
             if (yVelocity <= Constants.TERMINAL_VELOCITY) {
                 yVelocity += Constants.Y_ACCEL;
             }
+        } else {
+            yVelocity = 0;
         }
-        // If grounded, velocity should ideally be reset in collision resolution
     }
 
     private void checkAndResolveCollisions(Level level1, int oldY) {
@@ -38,7 +93,7 @@ public class PlayerHandler {
         Rectangle playerRect = new Rectangle(null, player.getXPos(), player.getYPos(), player.getImageWidth(), player.getImageHeight());
 
         for (Rectangle platform : level1.getPlatforms()) {
-            if (playerRect.intersects(platform)) { // Use intersects directly
+            if (playerRect.intersects(platform)) {
                 int playerBottom = player.getYPos() + player.getImageHeight();
                 int platformTop = platform.getYPos();
                 int playerTop = player.getYPos();

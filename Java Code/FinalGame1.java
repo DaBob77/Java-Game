@@ -35,8 +35,9 @@ public class FinalGame1 {
         new Rectangle(finalTestRect, 0, 500, 1080, 50) // Will add more later
     ));
     Level l1 = new Level(1, platforml1);
-    PlayerHandler playerHandler = new PlayerHandler(player); //Create a new playerHandler to use for the player
     Inputs inputHandler = new Inputs();
+    PlayerHandler playerHandler = new PlayerHandler(player, inputHandler); //Create a new playerHandler to use for the player, along with an inputHandler for movement
+
 
         JPanel gamePanel = new JPanel() {
             @Override
