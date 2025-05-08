@@ -15,6 +15,9 @@ public class PlayerHandler {
         // 1. Apply physics
         applyGravity();
         xMovement();
+        if (input.isSpacePressed() && grounded) {
+            jump();
+        }
 
         // 2. Update player position based on velocity
         int oldY = player.getYPos();
@@ -22,13 +25,14 @@ public class PlayerHandler {
 
         player.setXPos((int)(oldX + xVelocity));
         player.setYPos((int)(oldY + yVelocity));
-        System.out.println(xVelocity);
 
         // 3. Check for collisions with the new position and resolve them
         checkAndResolveCollisions(level1, oldY);
 
-        // System.out.println("Grounded: " + grounded + ", yVel: " + yVelocity + ", yPos: " + player.getYPos());
+        System.out.println("Grounded: " + grounded + ", yVel: " + yVelocity + ", xVel: " + xVelocity + ", yPos: "  + player.getYPos() + " + xPos: " + player.getXPos());
     }
+
+
 
     private void xMovement() {
         if (input.isDPressed() || input.isAPressed()) { //Check the player is trying to move
@@ -50,32 +54,40 @@ public class PlayerHandler {
                     xVelocity = -Constants.MAX_X_VELO_GROUNDED;
                 }
             }
-        }
-         // 2. No input, handle deceleration (friction)
-         if (Math.abs(xVelocity) < 0.5) { // If speed is very low, stop completely
-            xVelocity = 0;
-            xDir = 0; // Not moving, so no specific direction
         } else {
-            // Player is coasting, set facing direction based on current movement
-            xDir = (xVelocity > 0) ? 1 : -1;
-            
-            // Determine direction for deceleration force (opposite to current velocity)
-            int deaccelForceDirection = (xVelocity > 0) ? -1 : 1;
-            
-            xVelocity += deaccelForceDirection * Constants.X_DEACCEL_GROUNDED;
-
-            // Ensure deceleration doesn't reverse direction (i.e., overshoot zero)
-            if ((deaccelForceDirection == -1 && xVelocity < 0) || // Was moving right, decelerated past 0
-                (deaccelForceDirection == 1 && xVelocity > 0)) {  // Was moving left, decelerated past 0
+         // 2. No input, handle deceleration (friction)
+            if (Math.abs(xVelocity) < 0.5) { // If speed is very low, stop completely
                 xVelocity = 0;
-            }
-            
-            // If velocity becomes zero after deceleration, update facing direction to neutral
-            if (xVelocity == 0) {
-                xDir = 0;
+                xDir = 0; // Not moving, so no specific direction
+            } else {
+                // Player is coasting, set facing direction based on current movement
+                xDir = (xVelocity > 0) ? 1 : -1;
+                
+                // Determine direction for deceleration force (opposite to current velocity)
+                int deaccelForceDirection = (xVelocity > 0) ? -1 : 1;
+                
+                xVelocity += deaccelForceDirection * Constants.X_DEACCEL_GROUNDED;
+
+                // Ensure deceleration doesn't reverse direction (i.e., overshoot zero)
+                if ((deaccelForceDirection == -1 && xVelocity < 0) || // Was moving right, decelerated past 0
+                    (deaccelForceDirection == 1 && xVelocity > 0)) {  // Was moving left, decelerated past 0
+                    xVelocity = 0;
+                }
+                
+                // If velocity becomes zero after deceleration, update facing direction to neutral
+                if (xVelocity == 0) {
+                    xDir = 0;
+                }
+                
             }
         }
     }
+
+
+    private void jump() {
+        yVelocity += Constants.JUMP_FORCE;
+    }
+
 
     private void applyGravity() {
         // Apply gravity only if not grounded
@@ -87,6 +99,8 @@ public class PlayerHandler {
             yVelocity = 0;
         }
     }
+
+
 
     private void checkAndResolveCollisions(Level level1, int oldY) {
         grounded = false; // Assume not grounded until a collision proves otherwise
