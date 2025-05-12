@@ -32,8 +32,6 @@ public class PlayerHandler {
         System.out.println("Grounded: " + grounded + ", yVel: " + yVelocity + ", xVel: " + xVelocity + ", yPos: "  + player.getYPos() + " + xPos: " + player.getXPos());
     }
 
-
-
     private void xMovement() {
         if (input.isDPressed() || input.isAPressed()) { //Check the player is trying to move
             if (input.isDPressed()) {
@@ -83,11 +81,9 @@ public class PlayerHandler {
         }
     }
 
-
     private void jump() {
         yVelocity += Constants.JUMP_FORCE;
     }
-
 
     private void applyGravity() {
         // Apply gravity only if not grounded
@@ -100,28 +96,42 @@ public class PlayerHandler {
         }
     }
 
-
-
     private void checkAndResolveCollisions(Level level1, int oldY) {
         grounded = false; // Assume not grounded until a collision proves otherwise
-        Rectangle playerRect = new Rectangle(null, player.getXPos(), player.getYPos(), player.getImageWidth(), player.getImageHeight());
 
+        // Calculate bottom left and bottom right for the player
+        int playerXLeft = player.getXPos();
+        int playerXRight = player.getXPos() + player.getImageWidth();
+        int playerYBottom = player.getYPos() + player.getImageHeight();
+        int playerYTop = player.getYPos();
+
+        Rectangle playerRect = new Rectangle(
+            null,
+            playerXLeft, playerYBottom,   // bottom left
+            playerXRight, playerYTop,     // top right
+            false
+        );
         for (Rectangle platform : level1.getPlatforms()) {
+            if (platform.ignoreCollisions()) {
+                continue;
+            }
             if (playerRect.intersects(platform)) {
-                int playerBottom = player.getYPos() + player.getImageHeight();
-                int platformTop = platform.getYPos();
-                int playerTop = player.getYPos();
-                int platformBottom = platform.getYPos() + platform.getHeight(); // Use getHeight
+                // Assume platforms are axis-aligned and use their bottom left/right for collision
+                int platformTop = Math.max(platform.getYPosL(), platform.getYPosR());
+                int playerBottom = Math.min(playerRect.getYPosL(), playerRect.getYPosR());
 
                 // Check if player was previously above the platform and is now intersecting (landing)
                 if (yVelocity >= 0 && oldY + player.getImageHeight() <= platformTop) {
-                     player.setYPos(platformTop - player.getImageHeight()); // Place player exactly on top
-                     grounded = true;
-                     yVelocity = 0; // Stop vertical movement
-                     break; // Exit loop once grounded on a platform
+                    // Place player exactly on top
+                    player.setYPos(platformTop - player.getImageHeight());
+                    grounded = true;
+                    yVelocity = 0;
+                    break;
                 }
             }
         }
         // If no collision resolving into grounded state was found, grounded remains false.
     }
+
+    public void setYVel(double yVel) {this.yVelocity = yVel; }
 }

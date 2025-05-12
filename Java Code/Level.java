@@ -29,7 +29,11 @@ public class Level {
 
     public void draw(Graphics g) { //This will be removed as all backgrounds are added
         for (Rectangle platform : platforms) { //Loop through all platforms and draw the image for each
-            g.drawImage(platform.getImage(), platform.getXPos(), platform.getYPos(), platform.getWidth(), platform.getHeight(), null);
+            int x = platform.getXPosL();
+            int y = Math.min(platform.getYPosL(), platform.getYPosR());
+            int width = platform.getXPosR() - platform.getXPosL();
+            int height = Math.abs(platform.getYPosR() - platform.getYPosL());
+            g.drawImage(platform.getImage(), x, y, width, height, null);
         }
     }
 }
