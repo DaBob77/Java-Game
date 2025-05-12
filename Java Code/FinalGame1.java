@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.Timer;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -9,66 +8,64 @@ import java.io.*;
 
 public class FinalGame1 {
     public static void main(String[] args) {
+        double deltaTime = 0;
         JFrame frame = new JFrame("Portal 2d");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-        //Create a null image in case file reading fails
+        frame.setSize(1080, 720);
+
+        // Create a null image in case file reading fails
         BufferedImage playerImage = null;
-        BufferedImage testRect = null;
 
-        try { //Attempt to set all images
+        try {
             playerImage = ImageIO.read(new File("IMAGES/MC.png"));
-            testRect = ImageIO.read(new File("IMAGES/testrect.png"));
-
-        } catch(IOException e) {
-            System.out.println("At least one image failed to load");
+        } catch (IOException e) {
+            System.out.println("Image failed to load");
             e.printStackTrace();
         }
 
-        //Convert image to final to use in other classes
+        // Convert image to final to use in other classes
         final BufferedImage finalPlayerImage = playerImage;
-        final BufferedImage finalTestRect = testRect;
 
-    Character player = new Character(finalPlayerImage, 100, 100); // Start player at (100, 100)
-    // Platform: x=0, y=500, width=1080, height=50
-    ArrayList<Rectangle> platforml1 = new ArrayList<>(Arrays.asList(
-        new Rectangle(finalTestRect, 0, 500, 1080, 50) // Will add more later
-    ));
-    Level l1 = new Level(1, platforml1);
-    PlayerHandler playerHandler = new PlayerHandler(player); //Create a new playerHandler to use for the player
-    Inputs inputHandler = new Inputs();
+        // Initial player position
+        final int[] playerPosition = {360, 540};
 
         JPanel gamePanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                player.draw(g);
-                l1.draw(g);
-                }
-            };
-        frame.addKeyListener(inputHandler);
-        frame.addMouseListener(inputHandler);
-        frame.addMouseMotionListener(inputHandler);
+                g.drawImage(finalPlayerImage, playerPosition[0], playerPosition[1], null);
+            }
+        };
 
-        frame.add(gamePanel);
-        frame.setFocusable(true);
-        frame.requestFocusInWindow();
-        frame.setVisible(true);
-        
-
-        //Use timer for gameloop
-        Timer gameTimer = new Timer(Constants.DELAY, new ActionListener() {
+        // Add key listener for movement
+        frame.addKeyListener(new KeyAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                playerHandler.updatePlayer(l1);
-                
-                // Repaint the panel
-                gamePanel.repaint();
+            public void keyPressed(KeyEvent e) {
+                int key = e.getKeyCode();
+                switch (key) {
+                    case KeyEvent.VK_UP:
+                        playerPosition[1] -= 10; // Move up
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        playerPosition[1] += 10; // Move down
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        playerPosition[0] -= 10; // Move left
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        playerPosition[0] += 10; // Move right
+                        break;
+                }
+                gamePanel.repaint(); // Repaint the panel to reflect the new position
             }
         });
 
-        gameTimer.start();
+        frame.add(gamePanel);
+        frame.setVisible(true);
     }
 }
+
+
+
 
 
