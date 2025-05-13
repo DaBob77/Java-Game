@@ -104,18 +104,21 @@ public class PlayerHandler {
 
     private void checkAndResolveCollisions(Level level1, int oldY) {
         grounded = false; // Assume not grounded until a collision proves otherwise
-        Rectangle playerRect = new Rectangle(null, player.getXPos(), player.getYPos(), player.getImageWidth(), player.getImageHeight());
+        Rectangle playerRect = new Rectangle(null, player.getXPos(), player.getYPos(), Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, false);
 
         for (Rectangle platform : level1.getPlatforms()) {
+            if (platform.getIgnoreCollisions() == true ) {
+                continue;
+            }
             if (playerRect.intersects(platform)) {
-                int playerBottom = player.getYPos() + player.getImageHeight();
+                int playerBottom = player.getYPos() + Constants.PLAYER_HEIGHT;
                 int platformTop = platform.getYPos();
                 int playerTop = player.getYPos();
                 int platformBottom = platform.getYPos() + platform.getHeight(); // Use getHeight
 
                 // Check if player was previously above the platform and is now intersecting (landing)
-                if (yVelocity >= 0 && oldY + player.getImageHeight() <= platformTop) {
-                     player.setYPos(platformTop - player.getImageHeight()); // Place player exactly on top
+                if (yVelocity >= 0 && oldY + Constants.PLAYER_HEIGHT <= platformTop) {
+                     player.setYPos(platformTop - Constants.PLAYER_HEIGHT); // Place player exactly on top
                      grounded = true;
                      yVelocity = 0; // Stop vertical movement
                      break; // Exit loop once grounded on a platform

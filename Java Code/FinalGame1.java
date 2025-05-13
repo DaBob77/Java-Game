@@ -30,11 +30,10 @@ public class FinalGame1 {
         final BufferedImage finalTestRect = testRect;
 
 
-    Character player = new Character(finalPlayerImage, 1000, 250); // Start player at (100, 100)
-    // Platform: x=0, y=500, width=1080, height=50
+    Character player = new Character(finalPlayerImage, 250, 250); // Start player at (100, 100)
     ArrayList<Rectangle> platforml1 = new ArrayList<>(Arrays.asList(
-        new Rectangle(finalTestRect, 500, 0, 1500, 1000, true), // Background, no collisions
-        new Rectangle(finalTestRect, 0, 500, 1080, 50, false) // Will add more later
+        new Rectangle(finalTestRect, 0, 0, 1000, 1000, true), // Background, no collisions
+        new Rectangle(finalTestRect, 8, 903, 927, 406, false) // Will add more later
     ));
 
     Level l1 = new Level(1, platforml1);

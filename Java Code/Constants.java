@@ -21,5 +21,5 @@ public final class Constants {
 
     //Player dimensions (images)
     public static final int PLAYER_WIDTH = 56; 
-    public static final int PLAYER_HEIGHT = 104;
+    public static final int PLAYER_HEIGHT = 133;
 }

@@ -3,7 +3,7 @@ import java.awt.image.*;
 
 public class Rectangle {
     private BufferedImage image;
-    private int xPos; //xPos and yPos for the bottom right point of the rectangle
+    private int xPos; //xPos and yPos for the top right point of the rectangle
     private int yPos;
     private int width;
     private int height;
