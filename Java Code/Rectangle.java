@@ -1,9 +1,9 @@
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
 
 public class Rectangle {
     private BufferedImage image;
-    private int xPosL; // x position of bottom left
-    private int yPosL; // y position of bottom left
+    private int xPosL; // x position of top left
+    private int yPosL; // y position of top left
     private int xPosR; // x position of bottom right
     private int yPosR; // y position of bottom right
     private boolean ignoreCollisions;
@@ -19,17 +19,23 @@ public class Rectangle {
 
     public boolean intersects(Rectangle other) {
         if (other == null) return false;
-        // Calculate top and bottom y for both rectangles
-        int thisTop = Math.max(this.yPosL, this.yPosR);
+
+        // Calculate min/max for both rectangles
+        int thisLeft = Math.min(this.xPosL, this.xPosR);
+        int thisRight = Math.max(this.xPosL, this.xPosR);
         int thisBottom = Math.min(this.yPosL, this.yPosR);
-        int otherTop = Math.max(other.yPosL, other.yPosR);
+        int thisTop = Math.max(this.yPosL, this.yPosR);
+
+        int otherLeft = Math.min(other.xPosL, other.xPosR);
+        int otherRight = Math.max(other.xPosL, other.xPosR);
         int otherBottom = Math.min(other.yPosL, other.yPosR);
+        int otherTop = Math.max(other.yPosL, other.yPosR);
 
         // Check for non-overlap
-        if (this.xPosR <= other.xPosL ||    // this is left of other
-            this.xPosL >= other.xPosR ||    // this is right of other
-            thisBottom >= otherTop ||       // this is above other
-            thisTop <= otherBottom) {       // this is below other
+        if (thisRight <= otherLeft ||    // this is left of other
+            thisLeft >= otherRight ||    // this is right of other
+            thisBottom >= otherTop ||    // this is above other
+            thisTop <= otherBottom) {    // this is below other
             return false;
         }
         // Otherwise, they overlap

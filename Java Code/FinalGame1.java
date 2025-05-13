@@ -33,9 +33,8 @@ public class FinalGame1 {
     Character player = new Character(finalPlayerImage, 1000, 250); // Start player at (100, 100)
     // Platform: x=0, y=500, width=1080, height=50
     ArrayList<Rectangle> platforml1 = new ArrayList<>(Arrays.asList(
-        new Rectangle(finalTestRect, 500, 0, 1500,1000, true), //Ignore collisions, only used for the image
-        new Rectangle(null, 0, 1000, 1000, 950, false)
-        //new Rectangle(null, 508, 1029, 68, 915, false),
+        new Rectangle(finalTestRect, 500, 0, 1500, 1000, true), // This is fine for a background
+        new Rectangle(null, 0, 950, 1000, 1000, false) // Platform: left=0, top=950, right=1000, bottom=1000        //new Rectangle(null, 508, 1029, 68, 915, false),
         //new Rectangle(null, 1447, 1030, 59, 915, false),
         //new Rectangle(null, 947, 934, 117, 78, false),
         //new Rectangle(null, 782, 865, 141, 73, false),

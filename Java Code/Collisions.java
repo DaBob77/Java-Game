@@ -10,12 +10,11 @@ public class Collisions {
     }
 
     // Check if a player is colliding with a platform
-    public static boolean isPlayerColliding(Character player, Rectangle platform) {
-        // Construct player's rectangle using bottom left and bottom right coordinates
+        public static boolean isPlayerColliding(Character player, Rectangle platform) {
         int xPosL = player.getXPos();
-        int yPosL = player.getYPos() + player.getImageHeight(); // bottom left y
+        int yPosL = player.getYPos(); // top
         int xPosR = player.getXPos() + player.getImageWidth();
-        int yPosR = yPosL; // same y as left
+        int yPosR = player.getYPos() + player.getImageHeight(); // bottom
 
         Rectangle playerRect = new Rectangle(
             null,
