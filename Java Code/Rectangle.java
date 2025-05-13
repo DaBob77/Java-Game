@@ -7,13 +7,15 @@ public class Rectangle {
     private int yPos;
     private int width;
     private int height;
+    private boolean ignoreCollisions;
 
-    public Rectangle(BufferedImage image, int xPos, int yPos, int width, int height) { //Temperary image before we add an actual map
+    public Rectangle(BufferedImage image, int xPos, int yPos, int width, int height, boolean ignoreCollisions) { //Temperary image before we add an actual map
         this.image = image;
         this.xPos = xPos;
         this.yPos = yPos;
         this.width = width;
         this.height = height;
+        this.ignoreCollisions = ignoreCollisions;
     }
     
     
@@ -43,4 +45,7 @@ public class Rectangle {
     public void setHeight(int height) { this.height = height; }
     public void setPos(int xPos, int yPos) { this.xPos = xPos; this.yPos = yPos; }
     public void setSize(int width, int height) { this.width = width; this.height = height; }
+    public boolean getIgnoreCollisions() {
+        return ignoreCollisions;
+    }
 }

@@ -29,11 +29,14 @@ public class FinalGame1 {
         final BufferedImage finalPlayerImage = playerImage;
         final BufferedImage finalTestRect = testRect;
 
-    Character player = new Character(finalPlayerImage, 100, 100); // Start player at (100, 100)
+
+    Character player = new Character(finalPlayerImage, 1000, 250); // Start player at (100, 100)
     // Platform: x=0, y=500, width=1080, height=50
     ArrayList<Rectangle> platforml1 = new ArrayList<>(Arrays.asList(
-        new Rectangle(finalTestRect, 0, 500, 1080, 50) // Will add more later
+        new Rectangle(finalTestRect, 500, 0, 1500, 1000, true), // Background, no collisions
+        new Rectangle(finalTestRect, 0, 500, 1080, 50, false) // Will add more later
     ));
+
     Level l1 = new Level(1, platforml1);
     Inputs inputHandler = new Inputs();
     PlayerHandler playerHandler = new PlayerHandler(player, inputHandler); //Create a new playerHandler to use for the player, along with an inputHandler for movement
@@ -43,8 +46,8 @@ public class FinalGame1 {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                player.draw(g);
                 l1.draw(g);
+                player.draw(g);
                 }
             };
         frame.addKeyListener(inputHandler);

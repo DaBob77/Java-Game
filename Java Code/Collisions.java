@@ -13,7 +13,7 @@ public class Collisions {
     public static boolean isPlayerColliding(Character player, Rectangle platform) {
         //Convert player to a rectangle for simple collisions
         // Use player's width and height getters correctly
-        Rectangle playerRect = new Rectangle(null, player.getXPos(), player.getYPos(), player.getImageWidth(), player.getImageHeight() );
+        Rectangle playerRect = new Rectangle(null, player.getXPos(), player.getYPos(), player.getImageWidth(), player.getImageHeight(), );
         return isColliding(playerRect, platform);
     }
 }
