@@ -29,7 +29,7 @@ public class PlayerHandler {
         // 3. Check for collisions with the new position and resolve them
         checkAndResolveCollisions(level1, oldY);
 
-        System.out.println("Grounded: " + grounded + ", yVel: " + yVelocity + ", xVel: " + xVelocity + ", yPos: "  + player.getYPos() + " + xPos: " + player.getXPos());
+        //System.out.println("Grounded: " + grounded + ", yVel: " + yVelocity + ", xVel: " + xVelocity + ", yPos: "  + player.getYPos() + " + xPos: " + player.getXPos());
     }
 
 
@@ -107,21 +107,38 @@ public class PlayerHandler {
         Rectangle playerRect = new Rectangle(null, player.getXPos(), player.getYPos(), Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, false);
 
         for (Rectangle platform : level1.getPlatforms()) {
-            if (platform.getIgnoreCollisions() == true ) {
+            if (platform.getIgnoreCollisions()) {
                 continue;
             }
             if (playerRect.intersects(platform)) {
-                int playerBottom = player.getYPos() + Constants.PLAYER_HEIGHT;
                 int platformTop = platform.getYPos();
-                int playerTop = player.getYPos();
-                int platformBottom = platform.getYPos() + platform.getHeight(); // Use getHeight
+                int platformBottom = platform.getYPos() + platform.getHeight() - Constants.PLATFORM_OFFSET;
+                int playerLeft = player.getXPos();
+                int playerRight = player.getXPos() + Constants.PLAYER_WIDTH;
+                int platformLeft = platform.getXPos();
+                int platformRight = platform.getXPos() + platform.getWidth();
 
-                // Check if player was previously above the platform and is now intersecting (landing)
+                // 1. Landing on top of platform
                 if (yVelocity >= 0 && oldY + Constants.PLAYER_HEIGHT <= platformTop) {
-                     player.setYPos(platformTop - Constants.PLAYER_HEIGHT); // Place player exactly on top
-                     grounded = true;
-                     yVelocity = 0; // Stop vertical movement
-                     break; // Exit loop once grounded on a platform
+                    player.setYPos(platformTop - Constants.PLAYER_HEIGHT);
+                    grounded = true;
+                    yVelocity = 0;
+                    // Don't break yet, check for side collisions too
+                }
+                // 2. Hitting head on bottom of platform
+                else if (yVelocity < 0 && oldY >= platformBottom) {
+                    player.setYPos(platformBottom);
+                    yVelocity = 0;
+                }
+                // 3. Side collisions (moving right)
+                else if (xVelocity > 0 && playerRight > platformLeft && oldY + Constants.PLAYER_HEIGHT > platformTop && oldY < platformBottom) {
+                    player.setXPos(platformLeft - Constants.PLAYER_WIDTH);
+                    xVelocity = 0;
+                }
+                // 4. Side collisions (moving left)
+                else if (xVelocity < 0 && playerLeft < platformRight && oldY + Constants.PLAYER_HEIGHT > platformTop && oldY < platformBottom) {
+                    player.setXPos(platformRight);
+                    xVelocity = 0;
                 }
             }
         }

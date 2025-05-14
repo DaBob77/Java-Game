@@ -33,7 +33,12 @@ public class FinalGame1 {
     Character player = new Character(finalPlayerImage, 250, 250); // Start player at (100, 100)
     ArrayList<Rectangle> platforml1 = new ArrayList<>(Arrays.asList(
         new Rectangle(finalTestRect, 0, 0, 1000, 1000, true), // Background, no collisions
-        new Rectangle(finalTestRect, 8, 903, 927, 406, false) // Will add more later
+        new Rectangle(finalTestRect, 8, 903, 927, 406, false),
+        new Rectangle(finalTestRect, 8, 107, 64, 843, false),
+        new Rectangle(finalTestRect, 867, 110 ,61, 839, false),
+        new Rectangle(finalTestRect, 136, 678, 92, 70, false),
+        new Rectangle(finalTestRect, 259, 729, 131, 69, false),
+        new Rectangle(finalTestRect, 412, 789, 109, 72, false)
     ));
 
     Level l1 = new Level(1, platforml1);

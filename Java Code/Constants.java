@@ -18,8 +18,11 @@ public final class Constants {
     public static final double X_ACCEL_AIR = 0.35; // Slightly faster while in the air
     public static final double X_DEACCEL_AIR = 0.35;
     public static final int JUMP_FORCE = -25;     // Negative for upward force
+    
+    //Rectangles
+    public static final int PLATFORM_OFFSET = 35;
 
     //Player dimensions (images)
-    public static final int PLAYER_WIDTH = 56; 
+    public static final int PLAYER_WIDTH = 66; 
     public static final int PLAYER_HEIGHT = 133;
 }
