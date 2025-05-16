@@ -9,11 +9,19 @@ public class Collisions {
         return r1.intersects(r2);
     }
 
-    //Check if a player is colliding with a platform
-    public static boolean isPlayerColliding(Character player, Rectangle platform) {
-        //Convert player to a rectangle for simple collisions
-        // Use player's width and height getters correctly
-        Rectangle playerRect = new Rectangle(null, player.getXPos(), player.getYPos(), player.getImageWidth(), player.getImageHeight() );
+    // Check if a player is colliding with a platform
+        public static boolean isPlayerColliding(Character player, Rectangle platform) {
+        int xPosL = player.getXPos();
+        int yPosL = player.getYPos(); // top
+        int xPosR = player.getXPos() + player.getImageWidth();
+        int yPosR = player.getYPos() + player.getImageHeight(); // bottom
+
+        Rectangle playerRect = new Rectangle(
+            null,
+            xPosL, yPosL,
+            xPosR, yPosR,
+            false
+        );
         return isColliding(playerRect, platform);
     }
 }
