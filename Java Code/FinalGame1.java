@@ -12,38 +12,24 @@ public class FinalGame1 {
         JFrame frame = new JFrame("Portal 2d");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-        //Create a null image in case file reading fails
-        BufferedImage playerImage = null;
-        BufferedImage testRect = null;
-
-        try { //Attempt to set all images
-            playerImage = ImageIO.read(new File("IMAGES/MC.png"));
-            testRect = ImageIO.read(new File("IMAGES/testrect.png"));
-
-        } catch(IOException e) {
-            System.out.println("At least one image failed to load");
-            e.printStackTrace();
-        }
-
-        //Convert image to final to use in other classes
-        final BufferedImage finalPlayerImage = playerImage;
-        final BufferedImage finalTestRect = testRect;
 
 
-    Character player = new Character(finalPlayerImage, 250, 250); // Start player at (100, 100)
+    Character player = new Character(Images.PLAYER, 250, 250); // Start player at (100, 100)
     ArrayList<Rectangle> platforml1 = new ArrayList<>(Arrays.asList(
-        new Rectangle(finalTestRect, 0, 0, 1000, 1000, true), // Background, no collisions
-        new Rectangle(finalTestRect, 8, 903, 927, 406, false),
-        new Rectangle(finalTestRect, 8, 107, 64, 843, false),
-        new Rectangle(finalTestRect, 867, 110 ,61, 839, false),
-        new Rectangle(finalTestRect, 136, 678, 92, 70, false),
-        new Rectangle(finalTestRect, 259, 729, 131, 69, false),
-        new Rectangle(finalTestRect, 412, 789, 109, 72, false)
+        new Rectangle(Images.TEST_RECT, 0, 0, 1000, 1000, true), // Background, no collisions
+        new Rectangle(Images.TEST_RECT, 8, 903, 927, 406, false),
+        new Rectangle(Images.TEST_RECT, 8, 107, 64, 843, false),
+        new Rectangle(Images.TEST_RECT, 867, 110 ,61, 839, false),
+        new Rectangle(Images.TEST_RECT, 136, 678, 92, 70, false),
+        new Rectangle(Images.TEST_RECT, 259, 729, 131, 69, false),
+        new Rectangle(Images.TEST_RECT, 412, 789, 109, 72, false)
     ));
 
     Level l1 = new Level(1, platforml1);
     Inputs inputHandler = new Inputs();
     PlayerHandler playerHandler = new PlayerHandler(player, inputHandler); //Create a new playerHandler to use for the player, along with an inputHandler for movement
+    GunHandler gunHandler = new GunHandler(player, inputHandler); //Create a gun handler with input for mouse clicks and player for positioning
+    
 
 
         JPanel gamePanel = new JPanel() {
@@ -52,6 +38,7 @@ public class FinalGame1 {
                 super.paintComponent(g);
                 l1.draw(g);
                 player.draw(g);
+                gunHandler.draw(g);
                 }
             };
         frame.addKeyListener(inputHandler);
@@ -69,6 +56,7 @@ public class FinalGame1 {
             @Override
             public void actionPerformed(ActionEvent e) {
                 playerHandler.updatePlayer(l1);
+                gunHandler.updateGun();
                 
                 // Repaint the panel
                 gamePanel.repaint();

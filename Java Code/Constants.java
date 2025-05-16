@@ -19,10 +19,13 @@ public final class Constants {
     public static final double X_DEACCEL_AIR = 0.35;
     public static final int JUMP_FORCE = -25;     // Negative for upward force
     
-    //Rectangles
+    // Portals
+    public static final int PORTAL_COOLDOWN = 30; //30 frames (.5 seconds)
+
+    // Rectangles
     public static final int PLATFORM_OFFSET = 35;
 
-    //Player dimensions (images)
+    // Player dimensions (images)
     public static final int PLAYER_WIDTH = 66; 
     public static final int PLAYER_HEIGHT = 133;
 }
