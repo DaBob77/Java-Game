@@ -34,8 +34,8 @@ public class GunHandler {
 
 
 
-    private void shootBluePortal() {
-        int sourceXPos = player.getXPos(); // Where the bullet starts
+    private int[] startBluePortal() { // Bring the portal into exsistence and mark the target position.
+        int sourceXPos = player.getXPos();
         int sourceYPos = player.getYPos();
 
         int targetXPos = input.getMouseX();
@@ -43,10 +43,14 @@ public class GunHandler {
         System.out.println("Blue Portal from " + sourceXPos + ", " + sourceYPos + " toward " + targetXPos + ", " + targetYPos);
         bluePortal.setPos(sourceXPos, sourceYPos);
         bluePortal.setExisting(true);
+
+        int[] output = {sourceXPos, sourceYPos, targetXPos, targetXPos}; //Return the starting position and target
+        return output;
+        
     }
     
-    private void shootOrangePortal() {
-        int sourceXPos = player.getXPos(); // Where the bullet starts
+    private int[] startOrangePortal() { // Bring the portal into exsistence and mark the target position.
+        int sourceXPos = player.getXPos();
         int sourceYPos = player.getYPos();
 
         int targetXPos = input.getMouseX();
@@ -54,7 +58,12 @@ public class GunHandler {
         System.out.println("Orange Portal from " + sourceXPos + ", " + sourceYPos + " toward " + targetXPos + ", " + targetYPos);
         orangePortal.setPos(sourceXPos, sourceYPos);
         orangePortal.setExisting(true);
+
+        int[] output = {sourceXPos, sourceYPos, targetXPos, targetXPos}; //Return the starting position and target
+        return output;
     }
+
+    
     
     public void draw(Graphics g) { //Draw both portals
         bluePortal.draw(g);
