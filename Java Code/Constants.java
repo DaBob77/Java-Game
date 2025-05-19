@@ -20,7 +20,9 @@ public final class Constants {
     public static final int JUMP_FORCE = -25;     // Negative for upward force
     
     // Portals
-    public static final int PORTAL_COOLDOWN = 30; //30 frames (.5 seconds)
+    public static final int PORTAL_COOLDOWN = 15; // 15 frames (.25 seconds)
+    public static final int PORTAL_SPEED = 40;
+    public static final int PORTAL_DISTANCE = 50; 
 
     // Rectangles
     public static final int PLATFORM_OFFSET = 35;

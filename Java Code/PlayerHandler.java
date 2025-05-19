@@ -3,18 +3,22 @@ public class PlayerHandler {
     double yVelocity = 0;
     double xVelocity = 0;
     int xDir = 0; //-1 for left, 0 for none, 1 for right
+    boolean teleportCheck = false; // True right after you teleport, resets once you leave the portal
     Character player;
     Inputs input; //For movement
+    GunHandler gunHandler;
 
-    public PlayerHandler(Character player, Inputs input) {
+    public PlayerHandler(Character player, Inputs input, GunHandler gunHandler) {
         this.player = player;
         this.input = input;
+        this.gunHandler = gunHandler;
     }
 
     public void updatePlayer(Level level1) {
         // 1. Apply physics
         applyGravity();
         xMovement();
+        checkPortals();
         if (input.isSpacePressed() && grounded) {
             jump();
         }
@@ -143,5 +147,36 @@ public class PlayerHandler {
             }
         }
         // If no collision resolving into grounded state was found, grounded remains false.
+    }
+
+    public void checkPortals() { // Check for portal collisions and teleport player if needed
+        Portals bluePortal = gunHandler.getBluePortal();
+        Portals orangePortal = gunHandler.getOrangePortal();
+
+        if (bluePortal.isExisting() == false || orangePortal.isExisting() == false) { // End early if the portals dont exist
+            return;
+        }
+
+        if (gunHandler.getIsMoving()){ // End early if portals are still moving
+                return;
+        }
+
+        if (teleportCheck == false ) {
+
+            if (Math.abs(player.getXPos() - bluePortal.getXPos()) < Constants.PORTAL_DISTANCE && Math.abs(player.getYPos() - bluePortal.getYPos()) < Constants.PORTAL_DISTANCE) {
+                player.setPos(orangePortal.getXPos(), orangePortal.getYPos());
+                teleportCheck = true;
+            }
+
+            if (Math.abs(player.getXPos() - orangePortal.getXPos()) < Constants.PORTAL_DISTANCE && Math.abs(player.getYPos() - orangePortal.getYPos()) < Constants.PORTAL_DISTANCE) {
+                player.setPos(bluePortal.getXPos(), bluePortal.getYPos());
+                teleportCheck = true;
+            }
+        } else {
+            // Check if the player has left the portal
+            if ((Math.abs(player.getXPos() - bluePortal.getXPos()) > Constants.PORTAL_DISTANCE && Math.abs(player.getYPos()) - bluePortal.getYPos() < Constants.PORTAL_DISTANCE) || (Math.abs(player.getXPos() - orangePortal.getXPos()) < Constants.PORTAL_DISTANCE && Math.abs(player.getYPos() - orangePortal.getYPos()) < Constants.PORTAL_DISTANCE)) {
+                teleportCheck = false;
+            }
+        }
     }
 }

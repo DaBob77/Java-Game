@@ -14,6 +14,8 @@ public class GunHandler {
     int blueCooldown = 0;
     int orangeCooldown = 0;
 
+    boolean isMoving = false;
+
     public GunHandler(Character player, Inputs input) {
         this.player = player;
         this.input = input;
@@ -55,8 +57,10 @@ public class GunHandler {
         bluePortal.setPos(sourceXPos, sourceYPos);
         bluePortal.setExisting(true);
 
-        int[] output = {targetXPos, targetXPos}; //Return the target position
+        int[] output = {targetXPos, targetYPos}; //Return the target position
+        isMoving = true;
         return output;
+  
         
     }
     
@@ -70,7 +74,8 @@ public class GunHandler {
         orangePortal.setPos(sourceXPos, sourceYPos);
         orangePortal.setExisting(true);
 
-        int[] output = {targetXPos, targetXPos}; //Return the target position
+        int[] output = {targetXPos, targetYPos}; //Return the target position
+        isMoving = true;
         return output;
     }
     
@@ -85,20 +90,22 @@ public class GunHandler {
         int dy = targetY - currentY;
 
         // If already at target, do nothing
-        if (dx == 0 && dy == 0) return;
-
-        // Normalize direction and move by speed
+        if (dx == 0 && dy == 0) {
+            isMoving = false;
+            return;
+        }
+        // Normalize direction and move by Constants.PORTAL_SPEED
         double distance = Math.sqrt(dx * dx + dy * dy);
-        double speed = 40; // pixels per frame, adjust as needed
 
         // If close enough, snap to target
-        if (distance <= speed) {
+        if (distance <= Constants.PORTAL_SPEED) {
             bluePortal.setPos(targetX, targetY);
+            isMoving = false;
             return;
         }
 
-        double moveX = (dx / distance) * speed;
-        double moveY = (dy / distance) * speed;
+        double moveX = (dx / distance) * Constants.PORTAL_SPEED;
+        double moveY = (dy / distance) * Constants.PORTAL_SPEED;
 
         int newX = (int) Math.round(currentX + moveX);
         int newY = (int) Math.round(currentY + moveY);
@@ -107,12 +114,55 @@ public class GunHandler {
     }
 
     private void updateOrangePortal(int[] targetPos) {
+        int currentX = orangePortal.getXPos();
+        int currentY = orangePortal.getYPos();
+        int targetX = targetPos[0];
+        int targetY = targetPos[1];
 
+        // Calculate direction vector
+        int dx = targetX - currentX;
+        int dy = targetY - currentY;
+
+        // If already at target, do nothing
+        if (dx == 0 && dy == 0) {
+            isMoving = false;
+            return;
+        }
+        // Normalize direction and move by Constants.PORTAL_SPEED
+        double distance = Math.sqrt(dx * dx + dy * dy);
+
+        // If close enough, snap to target
+        if (distance <= Constants.PORTAL_SPEED) {
+            orangePortal.setPos(targetX, targetY);
+            isMoving = false;
+            return;
+        }
+
+        double moveX = (dx / distance) * Constants.PORTAL_SPEED;
+        double moveY = (dy / distance) * Constants.PORTAL_SPEED;
+
+        int newX = (int) Math.round(currentX + moveX);
+        int newY = (int) Math.round(currentY + moveY);
+
+        orangePortal.setPos(newX, newY);
     }
     
     
     public void draw(Graphics g) { //Draw both portals
         bluePortal.draw(g);
         orangePortal.draw(g);
+    }
+
+
+    public Portals getBluePortal() {
+        return bluePortal;
+    }
+
+    public Portals getOrangePortal() {
+        return orangePortal;
+    }
+
+    public boolean getIsMoving() {
+        return isMoving;
     }
 }

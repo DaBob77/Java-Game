@@ -34,6 +34,11 @@ public class Character {
         this.yPos = yPos;
     }
 
+    public void setPos(int xPos, int yPos) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+    }
+
     public void setImage(BufferedImage image) {
         this.image = image;
     }
