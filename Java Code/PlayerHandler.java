@@ -153,7 +153,7 @@ public class PlayerHandler {
         Portals bluePortal = gunHandler.getBluePortal();
         Portals orangePortal = gunHandler.getOrangePortal();
 
-        if (bluePortal.isExisting() == false || orangePortal.isExisting() == false) { // End early if the portals dont exist
+        if (!bluePortal.isExisting() || !orangePortal.isExisting()) { // End early if the portals dont exist
             return;
         }
 
@@ -161,20 +161,28 @@ public class PlayerHandler {
                 return;
         }
 
-        if (teleportCheck == false ) {
+        // Calculate proximity once
+        boolean playerNearBlue = Math.abs(player.getXPos() - bluePortal.getXPos()) < Constants.PORTAL_DISTANCE &&
+                                 Math.abs(player.getYPos() - bluePortal.getYPos()) < Constants.PORTAL_DISTANCE;
+        boolean playerNearOrange = Math.abs(player.getXPos() - orangePortal.getXPos()) < Constants.PORTAL_DISTANCE &&
+                                   Math.abs(player.getYPos() - orangePortal.getYPos()) < Constants.PORTAL_DISTANCE;
 
-            if (Math.abs(player.getXPos() - bluePortal.getXPos()) < Constants.PORTAL_DISTANCE && Math.abs(player.getYPos() - bluePortal.getYPos()) < Constants.PORTAL_DISTANCE) {
+        if (!teleportCheck) {
+            if (playerNearBlue) {
                 player.setPos(orangePortal.getXPos(), orangePortal.getYPos());
                 teleportCheck = true;
-            }
-
-            if (Math.abs(player.getXPos() - orangePortal.getXPos()) < Constants.PORTAL_DISTANCE && Math.abs(player.getYPos() - orangePortal.getYPos()) < Constants.PORTAL_DISTANCE) {
+            } else if (playerNearOrange) { // Prevent immediate re-evaluation after a teleport
                 player.setPos(bluePortal.getXPos(), bluePortal.getYPos());
                 teleportCheck = true;
             }
         } else {
-            // Check if the player has left the portal
-            if ((Math.abs(player.getXPos() - bluePortal.getXPos()) > Constants.PORTAL_DISTANCE && Math.abs(player.getYPos()) - bluePortal.getYPos() < Constants.PORTAL_DISTANCE) || (Math.abs(player.getXPos() - orangePortal.getXPos()) < Constants.PORTAL_DISTANCE && Math.abs(player.getYPos() - orangePortal.getYPos()) < Constants.PORTAL_DISTANCE)) {
+            // Check if player has left portal
+            boolean notNearBlueAnymore = Math.abs(player.getXPos() - bluePortal.getXPos()) > Constants.PORTAL_DISTANCE ||
+                                         Math.abs(player.getYPos() - bluePortal.getYPos()) > Constants.PORTAL_DISTANCE;
+            boolean notNearOrangeAnymore = Math.abs(player.getXPos() - orangePortal.getXPos()) > Constants.PORTAL_DISTANCE ||
+                                           Math.abs(player.getYPos() - orangePortal.getYPos()) > Constants.PORTAL_DISTANCE;
+
+            if (notNearBlueAnymore && notNearOrangeAnymore) {
                 teleportCheck = false;
             }
         }
