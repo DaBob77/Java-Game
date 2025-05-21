@@ -14,15 +14,15 @@ public class FinalGame1 {
         frame.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
 
-    Character player = new Character(Images.PLAYER, 250, 250); // Start player at (100, 100)
+    Character player = new Character(Images.ALL_LOADED_IMAGES.get(0), 250, 250); // Start player at (100, 100)
     ArrayList<Rectangle> platforml1 = new ArrayList<>(Arrays.asList(
-        new Rectangle(Images.TEST_RECT, 0, 0, 1000, 1000, true), // Background, no collisions
-        new Rectangle(Images.TEST_RECT, 8, 903, 927, 406, false),
-        new Rectangle(Images.TEST_RECT, 8, 107, 64, 843, false),
-        new Rectangle(Images.TEST_RECT, 867, 110 ,61, 839, false),
-        new Rectangle(Images.TEST_RECT, 136, 678, 92, 70, false),
-        new Rectangle(Images.TEST_RECT, 259, 729, 131, 69, false),
-        new Rectangle(Images.TEST_RECT, 412, 789, 109, 72, false)
+        new Rectangle(Images.ALL_LOADED_IMAGES.get(3), 0, 0, 1000, 1000, true), // Background, no collisions
+        new Rectangle(null, 8, 903, 927, 406, false),
+        new Rectangle(null, 8, 107, 64, 843, false),
+        new Rectangle(null, 867, 110 ,61, 839, false),
+        new Rectangle(null, 136, 678, 92, 70, false),
+        new Rectangle(null, 259, 729, 131, 69, false),
+        new Rectangle(null, 412, 789, 109, 72, false)
     ));
 
     Level l1 = new Level(1, platforml1);

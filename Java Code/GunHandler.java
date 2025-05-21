@@ -6,8 +6,8 @@ public class GunHandler {
     Character player;
     Inputs input;
 
-    Portals bluePortal = new Portals(Images.ORANGE_PORTAL, -9999, -9999, "blue"); //We don't have a blue portal yet
-    Portals orangePortal = new Portals(Images.ORANGE_PORTAL, -9999, -9999, "orange");
+    Portals bluePortal = new Portals(Images.ALL_LOADED_IMAGES.get(1), -9999, -9999, "blue"); //We don't have a blue portal yet
+    Portals orangePortal = new Portals(Images.ALL_LOADED_IMAGES.get(2), -9999, -9999, "orange");
     int[] targetBluePos = {-9999, -9999}; // Start out of bounds
     int[] targetOrangePos = {-9999, -9999}; // Start out of bounds
 

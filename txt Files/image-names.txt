@@ -1,0 +1,5 @@
+U:/Java Programs/Java Final Game/Java-Game/Java-Game/IMAGES/MC.png
+U:/Java Programs/Java Final Game/Java-Game/Java-Game/IMAGES/masterpiece-removebg-preview.png
+U:/Java Programs/Java Final Game/Java-Game/Java-Game/IMAGES/bullet.png
+U:/Java Programs/Java Final Game/Java-Game/Java-Game/IMAGES/orange_portal.jpg
+U:/Java Programs/Java Final Game/Java-Game/Java-Game/IMAGES/testrect.png
