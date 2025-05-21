@@ -2,7 +2,7 @@ public final class Constants {
     private Constants() {} // Prevent instantiation
 
     // Game loop
-    public static final int DELAY = 16; // Approx 60 FPS
+    public static final int DELAY = 100; // Approx 60 FPS
 
     // Window dimensions
     public static final int SCREEN_WIDTH = 1080;

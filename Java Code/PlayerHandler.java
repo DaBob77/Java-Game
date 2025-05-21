@@ -2,11 +2,17 @@ public class PlayerHandler {
     boolean grounded = false;
     double yVelocity = 0;
     double xVelocity = 0;
+<<<<<<< HEAD
     int xDir = 0; //-1 for left, 0 for none, 1 for right
     boolean teleportCheck = false; // True right after you teleport, resets once you leave the portal
     Character player;
     Inputs input; //For movement
     GunHandler gunHandler;
+=======
+    int xDir = 0; // -1 for left, 0 for none, 1 for right
+    Character player;
+    Inputs input; // For movement
+>>>>>>> origin/main
 
     public PlayerHandler(Character player, Inputs input, GunHandler gunHandler) {
         this.player = player;
@@ -27,31 +33,33 @@ public class PlayerHandler {
         int oldY = player.getYPos();
         int oldX = player.getXPos();
 
-        player.setXPos((int)(oldX + xVelocity));
-        player.setYPos((int)(oldY + yVelocity));
+        player.setXPos((int) (oldX + xVelocity));
+        player.setYPos((int) (oldY + yVelocity));
 
         // 3. Check for collisions with the new position and resolve them
         checkAndResolveCollisions(level1, oldY);
 
+<<<<<<< HEAD
         //System.out.println("Grounded: " + grounded + ", yVel: " + yVelocity + ", xVel: " + xVelocity + ", yPos: "  + player.getYPos() + " + xPos: " + player.getXPos());
+=======
+        System.out.println("Grounded: " + grounded + ", yVel: " + yVelocity + ", xVel: " + xVelocity + ", yPos: " + player.getYPos() + " + xPos: " + player.getXPos());
+>>>>>>> origin/main
     }
 
-
-
     private void xMovement() {
-        if (input.isDPressed() || input.isAPressed()) { //Check the player is trying to move
+        if (input.isDPressed() || input.isAPressed()) { // Check the player is trying to move
             if (input.isDPressed()) {
                 xDir = 1;
             } else {
                 xDir = -1;
             }
 
-            //Apply accleration force before checking for max speed
+            // Apply acceleration force before checking for max speed
             xVelocity += xDir * Constants.X_ACCEL_GROUNDED;
 
             if (xDir == 1) { // Moving right
                 if (xVelocity > Constants.MAX_X_VELO_GROUNDED) {
-                    xVelocity = Constants.MAX_X_VELO_GROUNDED; 
+                    xVelocity = Constants.MAX_X_VELO_GROUNDED;
                 }
             } else { // Moving left (xDir == -1)
                 if (xVelocity < -Constants.MAX_X_VELO_GROUNDED) {
@@ -59,17 +67,17 @@ public class PlayerHandler {
                 }
             }
         } else {
-         // 2. No input, handle deceleration (friction)
+            // 2. No input, handle deceleration (friction)
             if (Math.abs(xVelocity) < 0.5) { // If speed is very low, stop completely
                 xVelocity = 0;
                 xDir = 0; // Not moving, so no specific direction
             } else {
                 // Player is coasting, set facing direction based on current movement
                 xDir = (xVelocity > 0) ? 1 : -1;
-                
+
                 // Determine direction for deceleration force (opposite to current velocity)
                 int deaccelForceDirection = (xVelocity > 0) ? -1 : 1;
-                
+
                 xVelocity += deaccelForceDirection * Constants.X_DEACCEL_GROUNDED;
 
                 // Ensure deceleration doesn't reverse direction (i.e., overshoot zero)
@@ -77,21 +85,18 @@ public class PlayerHandler {
                     (deaccelForceDirection == 1 && xVelocity > 0)) {  // Was moving left, decelerated past 0
                     xVelocity = 0;
                 }
-                
+
                 // If velocity becomes zero after deceleration, update facing direction to neutral
                 if (xVelocity == 0) {
                     xDir = 0;
                 }
-                
             }
         }
     }
 
-
     private void jump() {
         yVelocity += Constants.JUMP_FORCE;
     }
-
 
     private void applyGravity() {
         // Apply gravity only if not grounded
@@ -103,14 +108,28 @@ public class PlayerHandler {
             yVelocity = 0;
         }
     }
-
-
-
+    
     private void checkAndResolveCollisions(Level level1, int oldY) {
+<<<<<<< HEAD
         grounded = false; // Assume not grounded until a collision proves otherwise
         Rectangle playerRect = new Rectangle(null, player.getXPos(), player.getYPos(), Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, false);
+=======
+        grounded = false;
+>>>>>>> origin/main
 
+        int playerXLeft = player.getXPos();
+        int playerXRight = player.getXPos() + player.getImageWidth();
+        int playerYTop = player.getYPos();
+        int playerYBottom = player.getYPos() + player.getImageHeight();
+
+        Rectangle playerRect = new Rectangle(
+            null,
+            playerXLeft, playerYTop,      // top-left
+            playerXRight, playerYBottom,  // bottom-right
+            false
+        );
         for (Rectangle platform : level1.getPlatforms()) {
+<<<<<<< HEAD
             if (platform.getIgnoreCollisions()) {
                 continue;
             }
@@ -143,10 +162,35 @@ public class PlayerHandler {
                 else if (xVelocity < 0 && playerLeft < platformRight && oldY + Constants.PLAYER_HEIGHT > platformTop && oldY < platformBottom) {
                     player.setXPos(platformRight);
                     xVelocity = 0;
+=======
+            if (platform.ignoreCollisions()) continue;
+            if (playerRect.intersects(platform)) {
+                // Get platform top (smaller y)
+                int platformTop = Math.min(platform.getYPosL(), platform.getYPosR());
+                int platformBottom = Math.max(platform.getYPosL(), platform.getYPosR());
+                int playerPrevBottom = oldY + player.getImageHeight();
+
+                // Only land if falling and coming from above
+                if (yVelocity > 0 && playerPrevBottom <= platformTop) {
+                    // Snap player to platform top
+                    player.setYPos(platformTop - player.getImageHeight());
+                    grounded = true;
+                    yVelocity = 0;
+                    break;
+                } else if (playerYTop < platformBottom && playerYBottom > platformTop) {
+                    // Prevent player from moving inside platform from the side or bottom
+                    if (yVelocity < 0) { // Hitting head
+                        player.setYPos(platformBottom);
+                        yVelocity = 0;
+                    }
+>>>>>>> origin/main
                 }
             }
         }
-        // If no collision resolving into grounded state was found, grounded remains false.
+    }
+
+    public void setYVel(double yVel) {
+        this.yVelocity = yVel;
     }
 
     public void checkPortals() { // Check for portal collisions and teleport player if needed
