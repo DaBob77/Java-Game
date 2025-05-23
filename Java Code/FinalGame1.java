@@ -27,7 +27,7 @@ public class FinalGame1 {
 
     Level l1 = new Level(1, platforml1);
     Inputs inputHandler = new Inputs();
-    GunHandler gunHandler = new GunHandler(player, inputHandler); //Create a gun handler with input for mouse clicks and player for positioning
+    GunHandler gunHandler = new GunHandler(player, inputHandler, l1); //Create a gun handler with input for mouse clicks and player for positioning
     PlayerHandler playerHandler = new PlayerHandler(player, inputHandler, gunHandler); //Create a new playerHandler to use for the player, along with an inputHandler for movement
     
 

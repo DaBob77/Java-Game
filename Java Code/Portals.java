@@ -7,6 +7,7 @@ public class Portals {
     private int xPos = 0;
     private String color = "";
     private boolean existing = false; // Has the portal been placed?
+    
 
     public Portals(BufferedImage image, int yPos, int xPos, String color) {
 		this.image = image;
@@ -25,6 +26,7 @@ public class Portals {
     public void setColor(String color) { this.color = color; }
     public boolean isExisting() { return existing; }
     public void setExisting(boolean existing) { this.existing = existing; }
+    public BufferedImage getImage() {return image;}
     
       public void draw(Graphics g) {
         g.drawImage(image, xPos, yPos, null);

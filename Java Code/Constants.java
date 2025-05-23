@@ -24,10 +24,14 @@ public final class Constants {
     public static final int PORTAL_SPEED = 40;
     public static final int PORTAL_DISTANCE = 50; 
 
+    // Portal dimensions
+    public static final int PORTAL_WIDTH = 25;
+    public static final int PORTAL_HEIGHT = 50;
+
     // Rectangles
     public static final int PLATFORM_OFFSET = 35;
 
     // Player dimensions (images)
-    public static final int PLAYER_WIDTH = 66; 
-    public static final int PLAYER_HEIGHT = 133;
+    public static final int PLAYER_WIDTH = 32; 
+    public static final int PLAYER_HEIGHT = 80;
 }
