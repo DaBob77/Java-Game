@@ -114,6 +114,10 @@ private void updateBluePortal() {
         return;
     }
 
+    // Store old position for collision detection
+    int oldX = currentX;
+    int oldY = currentY;
+
     double moveX = bluePortalDirection[0] * Constants.PORTAL_SPEED;
     double moveY = bluePortalDirection[1] * Constants.PORTAL_SPEED;
 
@@ -124,40 +128,53 @@ private void updateBluePortal() {
     int portalHeight = bluePortal.getImage() != null ? Constants.PORTAL_HEIGHT : 10;
 
     Rectangle portalCollisionBox = new Rectangle(null, newX, newY, portalWidth, portalHeight, true);
-
+    
     for (Rectangle platform : this.currentLevel.getPlatforms()) {
         if (platform.getIgnoreCollisions()) {
             continue;
         }
-        if (platform.intersects(portalCollisionBox)) {
-            // Adjust position so portal stops at the edge of the platform
-            int stopX = newX;
-            int stopY = newY;
+        
+        if (portalCollisionBox.intersects(platform)) {
+            int platformTop = platform.getYPos();
+            int platformBottom = platform.getYPos() + platform.getHeight();
+            int platformLeft = platform.getXPos();
+            int platformRight = platform.getXPos() + platform.getWidth();
 
-            // Horizontal movement
-            if (Math.abs(bluePortalDirection[0]) > Math.abs(bluePortalDirection[1])) {
-                if (bluePortalDirection[0] > 0) { // Moving right
-                    stopX = platform.getXPos() - portalWidth;
-                } else { // Moving left
-                    stopX = platform.getXPos() + platform.getWidth();
+            if (Math.abs(bluePortalDirection[1]) > Math.abs(bluePortalDirection[0])) {
+                // 1. Hitting top of platform (portal moving down)
+                if (bluePortalDirection[1] > 0 && oldY + portalHeight <= platformTop) {
+                    bluePortal.setPos(newX, platformTop - portalHeight);
+                    isBlueMoving = false;
+                    return;
                 }
-            } else { // Vertical movement
-                if (bluePortalDirection[1] > 0) { // Moving down
-                    stopY = platform.getYPos() - portalHeight;
-                } else { // Moving up
-                    stopY = platform.getYPos() + platform.getHeight();
+                // 2. Hitting bottom of platform (portal moving up)
+                else if (bluePortalDirection[1] < 0 && oldY >= platformBottom) {
+                    bluePortal.setPos(newX, platformBottom);
+                    isBlueMoving = false;
+                    return;
                 }
             }
-
-            bluePortal.setPos(stopX, stopY);
-            isBlueMoving = false;
-            return;
+            // Moving primarily horizontally
+            else {
+                // 3. Hitting left side of platform (portal moving right)
+                if (bluePortalDirection[0] > 0 && oldX + portalWidth <= platformLeft) {
+                    bluePortal.setPos(platformLeft - portalWidth, newY);
+                    isBlueMoving = false;
+                    return;
+                }
+                // 4. Hitting right side of platform (portal moving left)
+                else if (bluePortalDirection[0] < 0 && oldX >= platformRight) {
+                    bluePortal.setPos(platformRight, newY);
+                    isBlueMoving = false;
+                    return;
+                }
+            }
         }
     }
 
     bluePortal.setPos(newX, newY);
 
-    if (newX < 0 || newX > Constants.SCREEN_WIDTH || newY < 0 || newY > Constants.SCREEN_HEIGHT) {
+    if (newX < 0 || newX > 9999 || newY < 0 || newY > 9999) {
         isBlueMoving = false;
     }
 }
@@ -175,6 +192,10 @@ private void updateOrangePortal() {
         return;
     }
 
+    // Store old position for collision detection
+    int oldX = currentX;
+    int oldY = currentY;
+
     double moveX = orangePortalDirection[0] * Constants.PORTAL_SPEED;
     double moveY = orangePortalDirection[1] * Constants.PORTAL_SPEED;
 
@@ -190,33 +211,49 @@ private void updateOrangePortal() {
         if (platform.getIgnoreCollisions()) {
             continue;
         }
-        if (platform.intersects(portalCollisionBox)) {
-            int stopX = newX;
-            int stopY = newY;
+        if (portalCollisionBox.intersects(platform)) {
+            int platformTop = platform.getYPos();
+            int platformBottom = platform.getYPos() + platform.getHeight();
+            int platformLeft = platform.getXPos();
+            int platformRight = platform.getXPos() + platform.getWidth();
 
-            if (Math.abs(orangePortalDirection[0]) > Math.abs(orangePortalDirection[1])) {
-                if (orangePortalDirection[0] > 0) { // Moving right
-                    stopX = platform.getXPos() - portalWidth;
-                } else { // Moving left
-                    stopX = platform.getXPos() + platform.getWidth();
+            // Check primary movement direction first
+            // Moving primarily vertically
+            if (Math.abs(orangePortalDirection[1]) > Math.abs(orangePortalDirection[0])) {
+                // 1. Hitting top of platform (portal moving down)
+                if (orangePortalDirection[1] > 0 && oldY + portalHeight <= platformTop) {
+                    orangePortal.setPos(newX, platformTop + portalHeight);
+                    isOrangeMoving = false;
+                    return;
                 }
-            } else {
-                if (orangePortalDirection[1] > 0) { // Moving down
-                    stopY = platform.getYPos() - portalHeight;
-                } else { // Moving up
-                    stopY = platform.getYPos() + platform.getHeight();
+                // 2. Hitting bottom of platform (portal moving up)
+                else if (orangePortalDirection[1] < 0 && oldY >= platformBottom) {
+                    orangePortal.setPos(newX, platformBottom);
+                    isOrangeMoving = false;
+                    return;
                 }
             }
-
-            orangePortal.setPos(stopX, stopY);
-            isOrangeMoving = false;
-            return;
+            // Moving primarily horizontally
+            else {
+                // 3. Hitting left side of platform (portal moving right)
+                if (orangePortalDirection[0] > 0 && oldX + portalWidth <= platformLeft) {
+                    orangePortal.setPos(platformLeft - portalWidth, newY);
+                    isOrangeMoving = false;
+                    return;
+                }
+                // 4. Hitting right side of platform (portal moving left)
+                else if (orangePortalDirection[0] < 0 && oldX >= platformRight) {
+                    orangePortal.setPos(platformRight, newY);
+                    isOrangeMoving = false;
+                    return;
+                }
+            }
         }
     }
 
     orangePortal.setPos(newX, newY);
 
-    if (newX < 0 || newX > Constants.SCREEN_WIDTH || newY < 0 || newY > Constants.SCREEN_HEIGHT) {
+    if (newX < 0 || newX > 9999|| newY < 0 || newY > 9999) {
         isOrangeMoving = false;
     }
 }

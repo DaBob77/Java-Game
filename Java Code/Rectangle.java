@@ -9,7 +9,7 @@ public class Rectangle {
     private int height;
     private boolean ignoreCollisions;
 
-    public Rectangle(BufferedImage image, int xPos, int yPos, int width, int height, boolean ignoreCollisions) { //Temperary image before we add an actual map
+    public Rectangle(BufferedImage image, int xPos, int yPos, int width, int height, boolean ignoreCollisions) { //Temporary image before we add an actual map
         this.image = image;
         this.xPos = xPos;
         this.yPos = yPos;

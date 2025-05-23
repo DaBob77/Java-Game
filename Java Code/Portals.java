@@ -13,6 +13,7 @@ public class Portals {
 		this.image = image;
         this.yPos = yPos;
         this.xPos = xPos;
+        
         this.color = color;
     }
     
