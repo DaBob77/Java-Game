@@ -36,7 +36,7 @@ public class Images {
 
     static {
         List<String> imageFilePaths = new ArrayList<>();
-        String imageListFilePath = "U:/Java Programs/Java Final Game/Java-Game/Java-Game/txt Files/image-names.txt";
+        String imageListFilePath = "txt Files/image-names.txt";
         boolean listReadSuccess = false;
 
         try {

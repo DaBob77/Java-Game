@@ -196,7 +196,7 @@ public class GunHandler {
         } else {
             // Moving right and hitting left side of platform
             if (state.directionX > 0 && oldPos.x + portalWidth <= platformLeft) {
-                return new Point(platformLeft - portalWidth, newPos.y);
+                return new Point(platformLeft - portalWidth - Constants.PLATFORM_OFFSET, newPos.y);
             }
             // Moving left and hitting right side of platform
             else if (state.directionX < 0 && oldPos.x >= platformRight) {
