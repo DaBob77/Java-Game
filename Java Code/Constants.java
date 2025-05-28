@@ -22,7 +22,10 @@ public final class Constants {
     // Portals
     public static final int PORTAL_COOLDOWN = 15; // 15 frames (.25 seconds)
     public static final int PORTAL_SPEED = 40;
-    public static final int PORTAL_DISTANCE = 50; 
+    public static final int PORTAL_DISTANCE = 50;
+    public static final int PORTAL_X_OFFSET = 25;
+    public static final int PORTAL_Y_OFFSET = 45;
+ 
 
     // Portal dimensions
     public static final int PORTAL_WIDTH = 25;

@@ -155,8 +155,7 @@ public class GunHandler {
     }
     
     private CollisionResult checkPlatformCollision(Point oldPos, Point newPos, PortalState state) {
-        Rectangle portalBox = new Rectangle(null, newPos.x, newPos.y, 
-                                          Constants.PORTAL_WIDTH, Constants.PORTAL_HEIGHT, true);
+        Rectangle portalBox = new Rectangle(null, newPos.x, newPos.y, Constants.PORTAL_WIDTH, Constants.PORTAL_HEIGHT, true);
         
         for (Rectangle platform : currentLevel.getPlatforms()) {
             if (platform.getIgnoreCollisions()) {
@@ -174,9 +173,9 @@ public class GunHandler {
     
     private Point calculateCollisionPosition(Point oldPos, Point newPos, Rectangle platform, PortalState state) {
         int platformTop = platform.getYPos();
-        int platformBottom = platform.getYPos() + platform.getHeight();
-        int platformLeft = platform.getXPos();
-        int platformRight = platform.getXPos() + platform.getWidth();
+        int platformBottom = platform.getYPos() + platform.getHeight() - Constants.PORTAL_Y_OFFSET;
+        int platformLeft = platform.getXPos() - Constants.PORTAL_X_OFFSET;
+        int platformRight = platform.getXPos() + platform.getWidth() - (int)(Constants.PORTAL_X_OFFSET * 1.2);
         
         int portalWidth = Constants.PORTAL_WIDTH;
         int portalHeight = Constants.PORTAL_HEIGHT;
@@ -196,7 +195,7 @@ public class GunHandler {
         } else {
             // Moving right and hitting left side of platform
             if (state.directionX > 0 && oldPos.x + portalWidth <= platformLeft) {
-                return new Point(platformLeft - portalWidth - Constants.PLATFORM_OFFSET, newPos.y);
+                return new Point(platformLeft - portalWidth, newPos.y);
             }
             // Moving left and hitting right side of platform
             else if (state.directionX < 0 && oldPos.x >= platformRight) {
