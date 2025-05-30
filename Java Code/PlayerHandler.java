@@ -14,10 +14,11 @@ public class PlayerHandler {
         this.gunHandler = gunHandler;
     }
 
-    public void updatePlayer(Level level1) {
+    public void updatePlayer(Level level) {
         // 1. Apply physics
         applyGravity();
         xMovement();
+        checkForTransitions(level);
         checkPortals();
         if (input.isSpacePressed() && grounded) {
             jump();
@@ -31,9 +32,9 @@ public class PlayerHandler {
         player.setYPos((int)(oldY + yVelocity));
 
         // 3. Check for collisions with the new position and resolve them
-        checkAndResolveCollisions(level1, oldY);
+        checkAndResolveCollisions(level, oldY);
 
-        //System.out.println("Grounded: " + grounded + ", yVel: " + yVelocity + ", xVel: " + xVelocity + ", yPos: "  + player.getYPos() + " + xPos: " + player.getXPos());
+        System.out.println("yPos: "  + player.getYPos() + " + xPos: " + player.getXPos());
     }
 
 
@@ -104,13 +105,24 @@ public class PlayerHandler {
         }
     }
 
+    private void checkForTransitions(Level level) {
+        // Check if player has reached the end of the level
+        if (Math.abs(player.getXPos() - level.getEndXPos()) < 20 && Math.abs(player.getYPos() - level.getEndYPos()) < 20) {
+            // Transition to next level or reset
+            int nextLevel = level.getLevel() + 1;
+            if (nextLevel > Constants.MAX_LEVELS) {
+                System.exit(0); // Exit the game if no more levels
+            }
+            level.setLevel(nextLevel);
+            player.setPos(level.getStartXPos(), level.getStartYPos());
+        }
+    } 
 
-
-    private void checkAndResolveCollisions(Level level1, int oldY) {
+    private void checkAndResolveCollisions(Level level, int oldY) {
         grounded = false; // Assume not grounded until a collision proves otherwise
         Rectangle playerRect = new Rectangle(null, player.getXPos(), player.getYPos(), Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT, false);
 
-        for (Rectangle platform : level1.getPlatforms()) {
+        for (Rectangle platform : level.getPlatforms()) {
             if (platform.getIgnoreCollisions()) {
                 continue;
             }

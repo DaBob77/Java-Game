@@ -9,17 +9,17 @@ public class Rectangle {
     private int height;
     private boolean ignoreCollisions;
 
-    public Rectangle(BufferedImage image, int xPos, int yPos, int width, int height, boolean ignoreCollisions) { //Temporary image before we add an actual map
+    public Rectangle(BufferedImage image, int xPos, int yPos, int width, int height, boolean ignoreCollisions) {
         this.image = image;
         this.xPos = xPos;
-        this.yPos = yPos;
+        this.yPos = yPos; 
         this.width = width;
         this.height = height;
         this.ignoreCollisions = ignoreCollisions;
     }
     
     
-    public boolean intersects(Rectangle other) {
+    public boolean intersects(Rectangle other) { 
         if (other == null) return false;
         // Check for non-overlap
         if (this.xPos + this.width <= other.xPos ||    // this is left of other

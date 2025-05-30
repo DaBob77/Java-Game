@@ -14,7 +14,6 @@ public class FinalGame1 {
         frame.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
 
-    Character player = new Character(Images.ALL_LOADED_IMAGES.get(0), 250, 250); // Start player at (100, 100)
     ArrayList<Rectangle> platforml1 = new ArrayList<>(Arrays.asList(
         new Rectangle(Images.ALL_LOADED_IMAGES.get(3), 0, 0, 1000, 1000, true), // Background, no collisions
         new Rectangle(null, 8, 903, 927, 406, false),
@@ -25,8 +24,11 @@ public class FinalGame1 {
         new Rectangle(null, 412, 789, 109, 72, false)
     ));
 
-    Level l1 = new Level(1, platforml1);
     Inputs inputHandler = new Inputs();
+
+    
+    Level l1 = new Level(1, 300, 100, 500, 500, platforml1);
+    Character player = new Character(Images.ALL_LOADED_IMAGES.get(0), l1.getStartXPos(), l1.getStartYPos()); // Start player at (100, 100)
     GunHandler gunHandler = new GunHandler(player, inputHandler, l1); //Create a gun handler with input for mouse clicks and player for positioning
     PlayerHandler playerHandler = new PlayerHandler(player, inputHandler, gunHandler); //Create a new playerHandler to use for the player, along with an inputHandler for movement
     

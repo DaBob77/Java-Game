@@ -37,4 +37,7 @@ public final class Constants {
     // Player dimensions (images)
     public static final int PLAYER_WIDTH = 32; 
     public static final int PLAYER_HEIGHT = 80;
+
+    // Levels
+    public static final int MAX_LEVELS = 3; // Maximum number of levels
 }
