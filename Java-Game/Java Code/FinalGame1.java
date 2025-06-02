@@ -17,7 +17,7 @@ public class FinalGame1 {
         frame.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
         ArrayList<Rectangle> platforml1 = new ArrayList<>(Arrays.asList(
-            new Rectangle(Images.ALL_LOADED_IMAGES.get(3), 0, 0, 1000, 1000, true), // Background, no collisions
+            new Rectangle(Images.ALL_LOADED_IMAGES.get(0), 0, 0, 1000, 1000, true), // Background, no collisions
             new Rectangle(null, 8, 903, 927, 406, false),
             new Rectangle(null, 8, 107, 64, 843, false),
             new Rectangle(null, 867, 110 ,61, 839, false),

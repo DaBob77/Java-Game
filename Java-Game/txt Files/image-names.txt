@@ -1,7 +1,11 @@
-IMAGES/MC.png
-IMAGES/masterpiece-removebg-preview.png
+IMAGES/bg.png
 IMAGES/bullet.png
-IMAGES/orange_portal.png
-IMAGES/testrect.png
+IMAGES/Door.png
+IMAGES/download (1).png
 IMAGES/lvl2.png
 IMAGES/lvl3.png
+IMAGES/masterpiece-removebg-preview.png
+IMAGES/masterpiece.png
+IMAGES/MC.png
+IMAGES/orange_portal.png
+IMAGES/testrect.png
