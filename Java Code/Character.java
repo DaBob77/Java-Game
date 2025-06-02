@@ -9,9 +9,6 @@ public class Character {
     private int imageHeight = 104;
     private int imageWidth = 56;
 
-    private final int JUMP_FORCE = 15; // Jump Constant
-
-
 
     // Constructor with image, xPos and yPos
     public Character(BufferedImage image, int xPos, int yPos) {
@@ -31,6 +28,11 @@ public class Character {
     }
     
     public void setYPos(int yPos) {
+        this.yPos = yPos;
+    }
+
+    public void setPos(int xPos, int yPos) {
+        this.xPos = xPos;
         this.yPos = yPos;
     }
 

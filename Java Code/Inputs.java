@@ -56,8 +56,7 @@ public class Inputs implements KeyListener, MouseListener, MouseMotionListener {
         mouseClickX = e.getX();
         mouseClickY = e.getY();
         mouseClicked = true; // Set a flag that a click occurred
-        System.out.println("Mouse clicked via Inputs at: (" + mouseClickX + ", " + mouseClickY + ")");
-        // Note: mouseClicked flag should be reset by the game logic after processing
+        //System.out.println("Mouse clicked via Inputs at: (" + mouseClickX + ", " + mouseClickY + ")");
     }
 
     @Override
